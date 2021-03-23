@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="res\eng-rus.tei" />
+    <None Include="res\deu-rus.tei" />
+    <Compile Include="DictionaryTypes.fs" />
+    <Compile Include="ConversionFunctions.fs" />
+    <Compile Include="ConversionDeRu.fs" />
+    <Compile Include="ConversionEnRu.fs" />
+    <Compile Include="Conversion.fs" />
+    <Compile Include="MongoConvert.fs" />
+    <Compile Include="MongoApi.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="FSharp.Data" Version="3.3.3" />
+    <PackageReference Include="FSharp.Json" Version="0.4.0" />
+    <PackageReference Include="MongoDB.Bson" Version="2.11.5" />
+    <PackageReference Include="MongoDB.Driver" Version="2.11.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+</Project>
