@@ -3,7 +3,7 @@
 open System
 open Argu
 open Dict2DB.Conversion
-open Dict2DB.MongoConvert
+open Dict2DB.MongoConvertWordCentric
 open MongoDB.Driver
 open MongoDB.Bson.Serialization
 open DictionaryTypes
@@ -54,7 +54,7 @@ let main argv =
         |> ignore
 
         let sequentially x = Async.Parallel (x, 1)
-        let convertTeiFunction = 
+        let convertFunction = 
             match dictionaryType with
             | Translation -> convertTeiXmlToTranslationDictionary
             | Definition -> convertTeiXmlToDefinitionDictionary
@@ -64,17 +64,19 @@ let main argv =
                 parseResults.GetResult FilePath
                 |> IO.File.ReadAllTextAsync
                 |> Async.AwaitTask
-            
+
+            let dictionary = convertFunction dictXml
+            printf "Entries count = %d" dictionary.Entries.Length
+
+            let addToDb = addToDatabaseFromTeiXml convertFunction
             let! updateResults =
                 dictXml
-                |> convertTeiFunction
-                |> dictionaryToDBEntry
-                |> addToDatabase (MongoClient(connectionString).GetDatabase(databaseName))
+                |> addToDb (MongoClient(connectionString).GetDatabase(databaseName))
                 |> sequentially
 
             updateResults
-            |> Array.filter (fun ur -> not ur.IsAcknowledged)
-            |> Array.map (fun ur -> printf "%s was not acknowledged" ur.UpsertedId.AsString)
+            |> Seq.filter (fun ur -> not ur.IsAcknowledged)
+            |> Seq.map (fun ur -> printf "%s was not acknowledged" ur.UpsertedId.AsString)
             |> ignore
         }
         |> Async.RunSynchronously

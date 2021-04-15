@@ -1,6 +1,6 @@
 namespace Dict2DB
 
-open MongoConvert
+open MongoConvertDictionaryCentric
 
 module MongoApi =
 

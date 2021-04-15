@@ -5,7 +5,7 @@ open MongoDB.Driver
 open MongoDB.Bson.Serialization.Attributes
 open Dict2DB.Conversion
 
-module MongoConvert =
+module MongoConvertDictionaryCentric =
 
     type DBEntry =
         {

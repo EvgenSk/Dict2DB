@@ -10,7 +10,8 @@
     <Compile Include="ConversionDeRu.fs" />
     <Compile Include="ConversionEnRu.fs" />
     <Compile Include="Conversion.fs" />
-    <Compile Include="MongoConvert.fs" />
+    <Compile Include="MongoConvertDictionaryCentric.fs" />
+    <Compile Include="MongoConvertWordCentric.fs" />
     <Compile Include="MongoApi.fs" />
   </ItemGroup>
   <ItemGroup>
